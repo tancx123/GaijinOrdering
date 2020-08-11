@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.item.add_item"></activity>
         <activity
             android:name=".HomeOne"
             android:label="@string/app_name"
@@ -22,23 +23,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.customer.new_customer"/>
-        <activity android:name=".ui.pack.add_package"/>
-        <activity android:name=".ui.pack.add_shipment"/>
-        <activity android:name=".ui.sales.SalesOrderMainFragment"/>
-        <activity android:name=".ui.invoice.InvoiceMainFragment"/>
-        <activity android:name=".ui.payment.PaymentMain"/>
-        <activity android:name=".ui.pack.PackageMain"/>
-        <activity android:name=".ui.customer.CustomerMain"/>
-        <activity android:name=".ui.item.ItemMain"/>
-        <activity android:name=".ui.invoice.add_new_invoice"/>
-        <activity android:name=".ui.invoice.add_line_item"/>
-        <activity android:name=".ui.purchase.PurchaseMain"/>
-        <activity android:name=".ui.vendor.VendorMain"/>
-        <activity android:name=".ui.purchase.add_new_purchase"/>
-        <activity android:name=".ui.purchase.add_line_item"/>
-        <activity android:name=".ui.vendor.add_new_vendor"/>
-        <activity android:name=".ui.sales.add_sales_line_item"/>
+        <activity android:name=".ui.customer.new_customer" />
+        <activity android:name=".ui.pack.add_package" />
+        <activity android:name=".ui.pack.add_shipment" />
+        <activity android:name=".ui.sales.SalesOrderMainFragment" />
+        <activity android:name=".ui.invoice.InvoiceMainFragment" />
+        <activity android:name=".ui.payment.PaymentMain" />
+        <activity android:name=".ui.pack.PackageMain" />
+        <activity android:name=".ui.customer.CustomerMain" />
+        <activity android:name=".ui.item.ItemMain" />
+        <activity android:name=".ui.invoice.add_new_invoice" />
+        <activity android:name=".ui.invoice.add_line_item" />
+        <activity android:name=".ui.purchase.PurchaseMain" />
+        <activity android:name=".ui.vendor.VendorMain" />
+        <activity android:name=".ui.purchase.add_new_purchase" />
+        <activity android:name=".ui.purchase.add_line_item" />
+        <activity android:name=".ui.vendor.add_new_vendor" />
+        <activity android:name=".ui.sales.add_sales_line_item" />
         <activity android:name=".ui.sales.add_sales_orders" />
         <activity android:name=".ui.bill.add_new_bill" />
         <activity android:name=".ui.staff.loginStaff" />
