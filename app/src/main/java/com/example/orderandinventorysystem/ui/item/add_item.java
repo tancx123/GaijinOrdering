@@ -26,16 +26,22 @@ import java.sql.Statement;
 
 public class add_item extends AppCompatActivity {
 
-    EditText itemName = findViewById(R.id.text_item_name_input);
-    EditText itemUnit = findViewById(R.id.text_item_unit_input);
-    EditText itemDesc = findViewById(R.id.text_description_input);
-    EditText sellPrice = findViewById(R.id.text_selling_price_input);
-    EditText costPrice = findViewById(R.id.text_purchase_price_input);
+    EditText itemName;
+    EditText itemUnit;
+    EditText itemDesc;
+    EditText sellPrice;
+    EditText costPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
+
+        itemName = findViewById(R.id.text_item_name_input);
+        itemUnit = findViewById(R.id.text_item_unit_input);
+        itemDesc = findViewById(R.id.text_item_description_input);
+        sellPrice = findViewById(R.id.text_selling_price_input);
+        costPrice = findViewById(R.id.text_purchase_price_input);
 
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -45,17 +51,20 @@ public class add_item extends AppCompatActivity {
 
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save: {
                 //constructor
                 Item item1 = new Item("0",itemName.getText().toString(), itemUnit.getText().toString(), itemDesc.getText().toString(), Double.parseDouble(sellPrice.getText().toString()), Double.parseDouble(costPrice.getText().toString()));
-               AddItem addItem = new AddItem(item1);
+                AddItem addItem = new AddItem(item1);
                 addItem.execute("");
                 this.finish();
                 Intent intent = new Intent(this, ItemMain.class);
                 intent.putExtra("Item", item1);
                 startActivity(intent);
+
+                Log.d("HAHA",itemName.getText().toString() + itemUnit.getText().toString() + itemDesc.getText().toString());
                 return true;
             }
 

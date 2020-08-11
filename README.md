@@ -34,3 +34,8 @@ UI Left
 - Payment (Add / Edit)
 - Sales Report
 
+Edit by CX
+add_item(UI + .java)
+ItemMain
+
+
