@@ -146,7 +146,7 @@
             <TextView
                 android:id="@+id/group_purchase_info"
                 android:layout_width="0dp"
-                android:layout_height="320dp"
+                android:layout_height="180dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
@@ -192,31 +192,6 @@
                 app:layout_constraintStart_toStartOf="@+id/text_purchase_price"
                 app:layout_constraintTop_toBottomOf="@+id/text_purchase_price" />
 
-            <TextView
-                android:id="@+id/text_purchase_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Description# "
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/text_purchase_price_input"
-                app:layout_constraintTop_toBottomOf="@+id/text_purchase_price_input" />
-
-            <EditText
-                android:id="@+id/text_purchase_description_input"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="Description"
-                app:layout_constraintEnd_toEndOf="@+id/text_purchase_description"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/text_purchase_description"
-                app:layout_constraintTop_toBottomOf="@+id/text_purchase_description" />
-            
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
