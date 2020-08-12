@@ -18,6 +18,17 @@ public class Item implements Serializable {
         this.costPrice = costPrice;
     }
 
+    public Item(String itemID, String itemName,String itemUnit, String itemDesc, int quantity,double sellPrice, double costPrice) {
+
+        this.itemID = itemID;
+        this.itemName = itemName;
+        this.itemUnit = itemUnit;
+        this.itemDesc = itemDesc;
+        this.quantity = quantity;
+        this.sellPrice = sellPrice;
+        this.costPrice = costPrice;
+    }
+
     public int getQuantity() {
         return quantity;
     }

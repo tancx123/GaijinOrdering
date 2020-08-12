@@ -64,7 +64,7 @@ public class add_item extends AppCompatActivity {
                 intent.putExtra("Item", item1);
                 startActivity(intent);
 
-                Log.d("HAHA",itemName.getText().toString() + itemUnit.getText().toString() + itemDesc.getText().toString());
+                //Log.d("HAHA",itemName.getText().toString() + itemUnit.getText().toString() + itemDesc.getText().toString());
                 return true;
             }
 

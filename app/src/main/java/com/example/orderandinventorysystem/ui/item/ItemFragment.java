@@ -97,8 +97,10 @@ public class ItemFragment extends Fragment implements ItemListAdapter.ItemClickL
     }
 
     @Override
-    public void onItemClick(View view, int position) {
-        startActivity(new Intent(getContext(), ItemMain.class));
+    public void onItemClick(View view, int position, String id, String name, double price) {
+        Intent intent = new Intent(getContext(), ItemMain.class);
+        intent.putExtra("itemID", id);
+        startActivity(intent);
     }
 
     public class ShowItemList extends AsyncTask<String, String, String> {
