@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,12 +17,26 @@ import com.example.orderandinventorysystem.ConnectionPhpMyAdmin;
 import com.example.orderandinventorysystem.Model.Customer;
 import com.example.orderandinventorysystem.R;
 import com.example.orderandinventorysystem.ui.bill.add_new_bill;
+import com.example.orderandinventorysystem.ui.item.add_item;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.concurrent.ExecutionException;
 
 public class new_customer extends AppCompatActivity {
+
+    EditText custType;
+    EditText custName;
+    EditText companyName;
+    EditText custEmail;
+    EditText custPhone;
+    EditText custAddress;
+    EditText custIC;
+
+
+
+    String latestID2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +55,24 @@ public class new_customer extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.save: {
                 //constructor
-                Customer cust = new Customer("1", "2", "3", "4", "5", "6", "7","8", "9");
-                AddCust addCust = new AddCust(cust);
-                addCust.execute("");
+                //Customer cust = new Customer("0", "2", "3", "4", "5", "6", "7","8", "9");
+                //AddCust addCust = new AddCust(cust);
+                //addCust.execute("");
+
+                String str_result="h";
+                try {
+                    str_result= new RetrieveCustID().execute().get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 this.finish();
+
+                RetrieveCustID retrieveCustID = new RetrieveCustID();
+                retrieveCustID.execute("");
                 Intent intent = new Intent(this, CustomerMain.class);
-                intent.putExtra("Customer", cust);
+                intent.putExtra("CustomerID", latestID2);
                 startActivity(intent);
                 return true;
             }
@@ -66,6 +93,56 @@ public class new_customer extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public class RetrieveCustID extends AsyncTask<String,String,String> {
+
+        RetrieveCustID() {
+        }
+
+        String checkConnection = "";
+        boolean isSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            ConnectionPhpMyAdmin connectionClass = new ConnectionPhpMyAdmin();
+            try {
+                Connection con = connectionClass.CONN();
+                if (con == null) {
+                    checkConnection = "Please check your internet connection.";
+                } else {
+
+                    String query = " SELECT custID FROM CUSTOMER ORDER BY itemID DESC LIMIT 1";
+                    Statement stmt = con.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+
+                    if(rs.next()){
+                        latestID2 = rs.getString(1);
+                    }
+
+                    Log.d("Success", "Done");
+                    checkConnection = "Done";
+                    isSuccess = true;
+
+                }
+            } catch (Exception ex) {
+                Log.d("Error", ex.toString());
+                isSuccess = false;
+                checkConnection = "Exceptions" + ex;
+            }
+
+            return checkConnection;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+        }
     }
 
     public class AddCust extends AsyncTask<String,String,String> {

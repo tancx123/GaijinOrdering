@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 public class Customer implements Serializable {
 
-    private String custName, icNo, companyName, email, phone, mobile, custType, gender, address;
+    private String custID, custName, icNo, email, phone, mobile, companyName, gender, custType, address;
 
-    public Customer(String custName, String icNo, String email, String phone, String mobile, String companyName, String gender, String custType, String address) {
+    public Customer(String custID, String custName, String icNo, String email, String phone, String mobile, String companyName, String gender, String custType, String address) {
+
+        this.custID = custID;
         this.custName = custName;
         this.icNo = icNo;
         this.companyName = companyName;

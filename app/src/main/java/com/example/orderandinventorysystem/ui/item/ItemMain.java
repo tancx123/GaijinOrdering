@@ -62,6 +62,13 @@ public class ItemMain extends AppCompatActivity {
 
                 return true;
             }
+            case R.id.edit_sales: {
+                Intent intent = new Intent(this, edit_item.class);
+                intent.putExtra("itemID", itemID);
+                startActivity(intent);
+
+                return true;
+            }
 
 
             default:

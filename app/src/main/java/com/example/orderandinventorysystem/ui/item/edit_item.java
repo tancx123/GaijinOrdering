@@ -1,8 +1,5 @@
 package com.example.orderandinventorysystem.ui.item;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,21 +8,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.orderandinventorysystem.ConnectionPhpMyAdmin;
-import com.example.orderandinventorysystem.Model.Customer;
 import com.example.orderandinventorysystem.Model.Item;
 import com.example.orderandinventorysystem.R;
-import com.example.orderandinventorysystem.ui.customer.CustomerMain;
-import com.example.orderandinventorysystem.ui.customer.new_customer;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.concurrent.ExecutionException;
 
-public class add_item extends AppCompatActivity {
+public class edit_item extends AppCompatActivity {
 
     EditText itemName;
     EditText itemUnit;
@@ -33,12 +29,16 @@ public class add_item extends AppCompatActivity {
     EditText sellPrice;
     EditText costPrice;
 
-    String latestID2;
+    String itemID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
+
+        Intent intent = getIntent();
+        String intentItemID = intent.getStringExtra("itemID");
+        itemID = intentItemID;
 
         itemName = findViewById(R.id.text_item_name_input);
         itemUnit = findViewById(R.id.text_item_unit_input);
@@ -48,9 +48,13 @@ public class add_item extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("New Item");
+        getSupportActionBar().setTitle("Edit Item");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        RetrieveItem retrieveItem = new RetrieveItem(itemID);
+        retrieveItem.execute("");
+
     }
 
     @Override
@@ -59,24 +63,11 @@ public class add_item extends AppCompatActivity {
             case R.id.save: {
                 //constructor
                 Item item1 = new Item("0",itemName.getText().toString(), itemUnit.getText().toString(), itemDesc.getText().toString(), Double.parseDouble(sellPrice.getText().toString()), Double.parseDouble(costPrice.getText().toString()));
-                AddItem addItem = new AddItem(item1);
-                addItem.execute("");
-
-                String str_result="h";
-                try {
-                    str_result= new RetrieveItemID().execute().get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                   e.printStackTrace();
-                }
+                UpdateItem updateItem = new UpdateItem(item1);
+                updateItem.execute("");
                 this.finish();
-
-                RetrieveItemID retrieveItemID = new RetrieveItemID();
-                retrieveItemID.execute("");
-
                 Intent intent = new Intent(this, ItemMain.class);
-                intent.putExtra("itemID", latestID2);
+                intent.putExtra("itemID",itemID);
                 startActivity(intent);
 
                 //Log.d("HAHA",itemName.getText().toString() + itemUnit.getText().toString() + itemDesc.getText().toString());
@@ -87,7 +78,6 @@ public class add_item extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -100,9 +90,14 @@ public class add_item extends AppCompatActivity {
         return true;
     }
 
-    public class RetrieveItemID extends AsyncTask<String,String,String> {
+    public class RetrieveItem extends AsyncTask<String,String,String> {
 
-        RetrieveItemID() {
+        Item item;
+        String id;
+
+        RetrieveItem(String id) {
+
+            this.id = id;
         }
 
         String checkConnection = "";
@@ -123,12 +118,12 @@ public class add_item extends AppCompatActivity {
                     checkConnection = "Please check your internet connection.";
                 } else {
 
-                    String query = " SELECT itemID FROM ITEM ORDER BY itemID DESC LIMIT 1";
+                    String query = " SELECT * FROM ITEM WHERE itemID ='" + itemID + "'";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
 
                     if(rs.next()){
-                        latestID2 = rs.getString(1);
+                        item = new Item(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),rs.getDouble(6), rs.getDouble(7));
                     }
 
                     Log.d("Success", "Done");
@@ -147,14 +142,29 @@ public class add_item extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
+
+            //Log.d("hahaha", item.getItemName());
+
+            itemName = findViewById(R.id.text_item_name_input);
+            itemUnit = findViewById(R.id.text_item_unit_input);
+            itemDesc = findViewById(R.id.text_item_description_input);
+            sellPrice = findViewById(R.id.text_selling_price_input);
+            costPrice = findViewById(R.id.text_purchase_price_input);
+
+            itemName.setText(item.getItemName());
+            itemUnit.setText(item.getItemUnit());
+            itemDesc.setText(item.getItemDesc());
+            sellPrice.setText(String.format("%.2f",item.getSellPrice()));
+            costPrice.setText(String.format("%.2f",item.getCostPrice()));
+
         }
     }
 
-    public class AddItem extends AsyncTask<String,String,String> {
+    public class UpdateItem extends AsyncTask<String,String,String> {
 
         Item item;
 
-        AddItem(Item item) {
+        UpdateItem(Item item) {
 
             this.item = item;
         }
@@ -167,57 +177,41 @@ public class add_item extends AppCompatActivity {
 
         }
 
+        @Override
         protected String doInBackground(String... params) {
 
             ConnectionPhpMyAdmin connectionClass = new ConnectionPhpMyAdmin();
             try {
                 Connection con = connectionClass.CONN();
                 if (con == null) {
-                    checkConnection = "No";
+                    checkConnection = "Please check your internet connection.";
                 } else {
-                    String query = "SELECT * FROM ITEM ORDER BY itemID DESC LIMIT 1";
+
+                    String query = " UPDATE ITEM SET itemName = '" + item.getItemName() + "'," +
+                            " itemUnit = '" + item.getItemUnit()  + "'," +
+                            " itemDesc = '" + item.getItemDesc() + "'," +
+                            " sellingPrice = '" + item.getSellPrice() + "'," +
+                            " purchasePrice = '" + item.getCostPrice() + "'" +
+                            " WHERE itemID ='" + itemID + "'";
+
                     Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
-                    String latestID;
-
-                    if (rs.next()) {
-                        latestID = rs.getString(1);
-                        int numID = Integer.parseInt(latestID.substring(2, 7)) + 1;
-                        if (numID < 10)
-                            latestID = "I-0000" + Integer.toString(numID);
-                        else if (numID < 100)
-                            latestID = "I-000" + Integer.toString(numID);
-                        else if (numID < 1000)
-                            latestID = "I-00" + Integer.toString(numID);
-                        else if (numID < 10000)
-                            latestID = "I-0" + Integer.toString(numID);
-                        else if (numID < 100000)
-                            latestID = "I-" + Integer.toString(numID);
-
-                        Log.d("ID", latestID);
-                    } else {
-                        latestID = "I-00001";
-                        Log.d("ID", latestID);
-                    }
-
-                    query = "INSERT INTO ITEM VALUES('" + latestID + "', '" + item.getItemName() + "', '" +
-                            item.getItemUnit() + "', '" + item.getItemDesc() + "', '" + item.getQuantity() + "', '" +
-                            item.getSellPrice() + "', '" + item.getCostPrice() + "')";
-
-                    stmt = con.createStatement();
                     stmt.executeUpdate(query);
-
-                    checkConnection = "Yes";
+                    Log.d("Success", "Done");
+                    checkConnection = "Done";
                     isSuccess = true;
 
                 }
             } catch (Exception ex) {
                 Log.d("Error", ex.toString());
                 isSuccess = false;
-                checkConnection = "No";
+                checkConnection = "Exceptions" + ex;
             }
 
             return checkConnection;
         }
+
+        @Override
+        protected void onPostExecute(String s) {}
     }
+
 }
