@@ -201,6 +201,7 @@ public class edit_customer extends AppCompatActivity {
                             radioGender = findViewById(R.id.radioBtn_Female);
                             gender = radioGender.getText().toString();
                             break;
+
                     }
                 }
             });
@@ -225,6 +226,7 @@ public class edit_customer extends AppCompatActivity {
                             radioCustType = findViewById(R.id.radioBtn_Individual);
                             custTypeText = radioCustType.getText().toString();
                             break;
+
                     }
                 }
             });
