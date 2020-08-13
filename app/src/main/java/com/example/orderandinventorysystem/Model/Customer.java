@@ -11,13 +11,21 @@ public class Customer implements Serializable {
         this.custID = custID;
         this.custName = custName;
         this.icNo = icNo;
-        this.companyName = companyName;
         this.email = email;
         this.phone = phone;
         this.mobile = mobile;
-        this.custType = custType;
+        this.companyName = companyName;
         this.gender = gender;
+        this.custType = custType;
         this.address = address;
+    }
+
+    public String getCustID(){
+        return custID;
+    }
+
+    public void setCustID(String custID){
+        this.custID = custID;
     }
 
     public String getAddress() {

@@ -36,6 +36,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Customer cust = mData.get(position);
+        holder.id.setText(cust.getCustID());
         holder.myTextView.setText(cust.getCustName());
         holder.comp.setText(cust.getCompanyName());
         holder.phone.setText(cust.getPhone());
@@ -50,10 +51,11 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView, comp, phone, mobile;
+        TextView id, myTextView, comp, phone, mobile;
 
         ViewHolder(View itemView) {
             super(itemView);
+            id = itemView.findViewById(R.id.cust_id);
             myTextView = itemView.findViewById(R.id.cust_name_view);
             comp = itemView.findViewById(R.id.comp_name_view);
             phone = itemView.findViewById(R.id.phone_view);
@@ -63,7 +65,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition(), id.getText().toString());
         }
     }
 
@@ -79,6 +81,6 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position, String id);
     }
 }

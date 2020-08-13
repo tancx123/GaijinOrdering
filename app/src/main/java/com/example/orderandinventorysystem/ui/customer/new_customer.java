@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,15 +28,17 @@ import java.util.concurrent.ExecutionException;
 
 public class new_customer extends AppCompatActivity {
 
-    EditText custType;
+    RadioGroup custType;
+    RadioGroup custGender;
+    RadioButton radioCustType;
+    RadioButton radioGender;
     EditText custName;
     EditText companyName;
     EditText custEmail;
-    EditText custPhone;
+    EditText companyPhone;
+    EditText custMobile;
     EditText custAddress;
     EditText custIC;
-
-
 
     String latestID2;
 
@@ -42,6 +46,49 @@ public class new_customer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_customer);
+
+        custType = findViewById(R.id.group_custType);
+        custGender = findViewById(R.id.group_gender);
+
+        custType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId) {
+                    case R.id.radioBtn_Business:
+                        radioCustType = findViewById(R.id.radioBtn_Business);
+                        break;
+
+                    case R.id.radioBtn_Individual:
+                        radioCustType = findViewById(R.id.radioBtn_Individual);
+                        break;
+                }
+            }
+        });
+
+        custGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioBtn_Male:
+                        radioGender = findViewById(R.id.radioBtn_Male);
+                        break;
+
+                    case R.id.radioBtn_Female:
+                        radioGender = findViewById(R.id.radioBtn_Female);
+                        break;
+                }
+            }
+        });
+
+        custName = findViewById(R.id.text_custName_input);
+        companyName = findViewById(R.id.text_company_name_input);
+        custEmail = findViewById(R.id.text_email_input);
+        companyPhone = findViewById(R.id.text_phone_input);
+        custMobile = findViewById(R.id.text_custMobile_input);
+        custAddress = findViewById(R.id.text_address_input);
+        custIC = findViewById(R.id.text_custIc_input);
+
+
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New Customer");
@@ -55,9 +102,9 @@ public class new_customer extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.save: {
                 //constructor
-                //Customer cust = new Customer("0", "2", "3", "4", "5", "6", "7","8", "9");
-                //AddCust addCust = new AddCust(cust);
-                //addCust.execute("");
+                Customer cust = new Customer("0", custName.getText().toString(), custIC.getText().toString(), custEmail.getText().toString(), companyPhone.getText().toString(), custMobile.getText().toString(), companyName.getText().toString(), radioGender.getText().toString(), radioCustType.getText().toString(), custAddress.getText().toString());
+                AddCust addCust = new AddCust(cust);
+                addCust.execute("");
 
                 String str_result="h";
                 try {
@@ -118,7 +165,7 @@ public class new_customer extends AppCompatActivity {
                     checkConnection = "Please check your internet connection.";
                 } else {
 
-                    String query = " SELECT custID FROM CUSTOMER ORDER BY itemID DESC LIMIT 1";
+                    String query = " SELECT custID FROM CUSTOMER ORDER BY custID DESC LIMIT 1";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
 

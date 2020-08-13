@@ -93,9 +93,9 @@ public class CustomerFragment extends Fragment implements CustomerListAdapter.It
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, int position,String id) {
         Intent intent = new Intent(getContext(), CustomerMain.class);
-        intent.putExtra("Customer", custList.get(position));
+        intent.putExtra("CustomerID", id);
         startActivity(intent);
     }
 
@@ -124,7 +124,7 @@ public class CustomerFragment extends Fragment implements CustomerListAdapter.It
                     ResultSet rs = stmt.executeQuery(query);
 
                     while (rs.next()) {
-                        custList.add(new Customer(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
+                        custList.add(new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
                         Log.d("Success", rs.getString(1));
                     }
 

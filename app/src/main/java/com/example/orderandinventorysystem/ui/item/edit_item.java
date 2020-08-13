@@ -40,11 +40,11 @@ public class edit_item extends AppCompatActivity {
         String intentItemID = intent.getStringExtra("itemID");
         itemID = intentItemID;
 
-        itemName = findViewById(R.id.text_item_name_input);
-        itemUnit = findViewById(R.id.text_item_unit_input);
-        itemDesc = findViewById(R.id.text_item_description_input);
-        sellPrice = findViewById(R.id.text_selling_price_input);
-        costPrice = findViewById(R.id.text_purchase_price_input);
+       // itemName = findViewById(R.id.text_item_name_input);
+       // itemUnit = findViewById(R.id.text_item_unit_input);
+       // itemDesc = findViewById(R.id.text_item_description_input);
+       // sellPrice = findViewById(R.id.text_selling_price_input);
+       // costPrice = findViewById(R.id.text_purchase_price_input);
 
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
