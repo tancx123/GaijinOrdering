@@ -88,7 +88,6 @@ public class add_item extends AppCompatActivity {
         }
     }
 
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.new_main_menu, menu);
@@ -202,7 +201,7 @@ public class add_item extends AppCompatActivity {
 
                     query = "INSERT INTO ITEM VALUES('" + latestID + "', '" + item.getItemName() + "', '" +
                             item.getItemUnit() + "', '" + item.getItemDesc() + "', '" + item.getQuantity() + "', '" +
-                            item.getSellPrice() + "', '" + item.getCostPrice() + "')";
+                            item.getQuantityPHY() + "' , '" + item.getSellPrice() + "', '" + item.getCostPrice() + "')";
 
                     stmt = con.createStatement();
                     stmt.executeUpdate(query);

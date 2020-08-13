@@ -6,7 +6,7 @@ public class Item implements Serializable {
 
     private String itemName, itemID, itemUnit, itemDesc;
     private double sellPrice, costPrice;
-    private int quantity = 0;
+    private int quantity = 0, quantityPHY = 0;
 
     public Item(String itemID, String itemName,String itemUnit, String itemDesc, double sellPrice, double costPrice) {
 
@@ -18,15 +18,24 @@ public class Item implements Serializable {
         this.costPrice = costPrice;
     }
 
-    public Item(String itemID, String itemName,String itemUnit, String itemDesc, int quantity,double sellPrice, double costPrice) {
+    public Item(String itemID, String itemName,String itemUnit, String itemDesc, int quantity, int quantityPHY,double sellPrice, double costPrice) {
 
         this.itemID = itemID;
         this.itemName = itemName;
         this.itemUnit = itemUnit;
         this.itemDesc = itemDesc;
         this.quantity = quantity;
+        this.quantityPHY = quantityPHY;
         this.sellPrice = sellPrice;
         this.costPrice = costPrice;
+    }
+
+    public int getQuantityPHY() {
+        return quantityPHY;
+    }
+
+    public void setQuantityPHY(int quantityPHY) {
+        this.quantityPHY = quantityPHY;
     }
 
     public int getQuantity() {

@@ -123,7 +123,7 @@ public class edit_item extends AppCompatActivity {
                     ResultSet rs = stmt.executeQuery(query);
 
                     if(rs.next()){
-                        item = new Item(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5),rs.getDouble(6), rs.getDouble(7));
+                        item = new Item(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(6),rs.getDouble(7), rs.getDouble(8));
                     }
 
                     Log.d("Success", "Done");
