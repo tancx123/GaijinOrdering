@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.example.orderandinventorysystem.ConnectionPhpMyAdmin;
@@ -40,44 +42,135 @@ public class add_item extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("New Item");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         itemName = findViewById(R.id.text_item_name_input);
         itemUnit = findViewById(R.id.text_item_unit_input);
         itemDesc = findViewById(R.id.text_item_description_input);
         sellPrice = findViewById(R.id.text_selling_price_input);
         costPrice = findViewById(R.id.text_purchase_price_input);
 
-        Toolbar toolbar = findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("New Item");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        itemUnit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    EditText txtUnit = (EditText)v;
+                    String itemUnit = txtUnit.getText().toString();
+                    if(!itemUnit.matches("[a-zA-Z ]+")){
+                        txtUnit.setError("Only A-Z is allow");
+                    }
+                }
+            }
+        });
+
+        itemDesc.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    EditText txtItemDesc = (EditText)v;
+                    String itemDesc = txtItemDesc.getText().toString();
+                    if(itemDesc.length() > 100){
+                        txtItemDesc.setError("Not exceed 50 character");
+                    }
+                }
+            }
+        });
+
+        sellPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    EditText txtSellPrice = (EditText)v;
+                    String sellPrice = txtSellPrice.getText().toString();
+
+                    if(!sellPrice.matches("[-+]?[0-9]*\\.?[0-9]+")){
+                        txtSellPrice.setError("Only enter 10 or 10.00");
+                    }
+                }
+            }
+        });
+
+        costPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    EditText txtCostPrice = (EditText)v;
+                    String costPrice = txtCostPrice.getText().toString();
+
+                    if(!costPrice.matches("[-+]?[0-9]*\\.?[0-9]+")){
+                        txtCostPrice.setError("Only enter 10 or 10.00");
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save: {
-                //constructor
-                Item item1 = new Item("0",itemName.getText().toString(), itemUnit.getText().toString(), itemDesc.getText().toString(), Double.parseDouble(sellPrice.getText().toString()), Double.parseDouble(costPrice.getText().toString()));
-                AddItem addItem = new AddItem(item1);
-                addItem.execute("");
 
-                String str_result="h";
-                try {
-                    str_result= new RetrieveItemID().execute().get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                   e.printStackTrace();
+                Toast toast = Toast.makeText(getApplicationContext(),"Please fill up the error field",Toast.LENGTH_SHORT);
+
+                if(itemName.getText().toString().isEmpty() || itemUnit.getText().toString().isEmpty() || itemDesc.getText().toString().isEmpty() || sellPrice.getText().toString().isEmpty() || costPrice.getText().toString().isEmpty()){
+
+                    if(itemName.getText().toString().isEmpty())
+                        itemName.setError("Please enter this field");
+
+                    if(itemUnit.getText().toString().isEmpty())
+                        itemUnit.setError("Please enter this field");
+
+                    if(itemDesc.getText().toString().isEmpty())
+                    itemDesc.setError("Please enter this field");
+
+                    if(sellPrice.getText().toString().isEmpty())
+                        sellPrice.setError("Please enter this field");
+
+                    if(costPrice.getText().toString().isEmpty())
+                        costPrice.setError("Please enter this field");
+
+                    toast.show();
+
+                }else if(!itemUnit.getText().toString().matches("[a-zA-Z ]+")){
+                    itemUnit.setError("Only A-Z allow");
+                    toast.show();
+
+                }else if(!sellPrice.getText().toString().matches("[-+]?[0-9]*\\.?[0-9]+")){
+                    sellPrice.setError("Enter 10 or 10.00");
+                    toast.show();
+
+                } else if(!costPrice.getText().toString().matches("[-+]?[0-9]*\\.?[0-9]+")){
+                    costPrice.setError("Enter 10 or 10.00");
+                    toast.show();
+
+                }else{
+
+                    //constructor
+                    Item item1 = new Item("0",itemName.getText().toString(), itemUnit.getText().toString(), itemDesc.getText().toString(), Double.parseDouble(sellPrice.getText().toString()), Double.parseDouble(costPrice.getText().toString()));
+                    AddItem addItem = new AddItem(item1);
+                    addItem.execute("");
+
+                    String str_result="h";
+                    try {
+                        str_result= new RetrieveItemID().execute().get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    this.finish();
+
+                    RetrieveItemID retrieveItemID = new RetrieveItemID();
+                    retrieveItemID.execute("");
+
+                    Intent intent = new Intent(this, ItemMain.class);
+                    intent.putExtra("itemID", latestID2);
+                    startActivity(intent);
                 }
-                this.finish();
-
-                RetrieveItemID retrieveItemID = new RetrieveItemID();
-                retrieveItemID.execute("");
-
-                Intent intent = new Intent(this, ItemMain.class);
-                intent.putExtra("itemID", latestID2);
-                startActivity(intent);
 
                 //Log.d("HAHA",itemName.getText().toString() + itemUnit.getText().toString() + itemDesc.getText().toString());
                 return true;

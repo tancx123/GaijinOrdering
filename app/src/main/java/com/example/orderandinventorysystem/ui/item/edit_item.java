@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -61,17 +62,66 @@ public class edit_item extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save: {
-                //constructor
-                Item item1 = new Item("0",itemName.getText().toString(), itemUnit.getText().toString(), itemDesc.getText().toString(), Double.parseDouble(sellPrice.getText().toString()), Double.parseDouble(costPrice.getText().toString()));
-                UpdateItem updateItem = new UpdateItem(item1);
-                updateItem.execute("");
-                this.finish();
-                Intent intent = new Intent(this, ItemMain.class);
-                intent.putExtra("itemID",itemID);
-                startActivity(intent);
 
-                //Log.d("HAHA",itemName.getText().toString() + itemUnit.getText().toString() + itemDesc.getText().toString());
-                return true;
+                if(itemName.getText().toString().isEmpty() || itemUnit.getText().toString().isEmpty() || itemDesc.getText().toString().isEmpty() || sellPrice.getText().toString().isEmpty() || costPrice.getText().toString().isEmpty()){
+
+                    if(itemName.getText().toString().isEmpty())
+                        itemName.setError("Please enter this field");
+
+                    if(itemUnit.getText().toString().isEmpty())
+                        itemUnit.setError("Please enter this field");
+
+                    if(itemDesc.getText().toString().isEmpty())
+                        itemDesc.setError("Please enter this field");
+
+                    if(sellPrice.getText().toString().isEmpty())
+                        sellPrice.setError("Please enter this field");
+
+                    if(costPrice.getText().toString().isEmpty())
+                        costPrice.setError("Please enter this field");
+
+                    Toast toast = Toast.makeText(getApplicationContext(),"Please fill up the error field",Toast.LENGTH_SHORT);
+
+                    toast.show();
+
+                }else if(!itemUnit.getText().toString().matches("[a-zA-Z ]+")){
+
+                    itemUnit.setError("Only A-Z allow");
+
+                    Toast toast = Toast.makeText(getApplicationContext(),"Please fill up the error field",Toast.LENGTH_SHORT);
+
+                    toast.show();
+
+                }else if(!sellPrice.getText().toString().matches("[-+]?[0-9]*\\.?[0-9]+")){
+
+                    sellPrice.setError("Enter 10 or 10.00");
+
+                    Toast toast = Toast.makeText(getApplicationContext(),"Please fill up the error field",Toast.LENGTH_SHORT);
+
+                    toast.show();
+
+                } else if(!costPrice.getText().toString().matches("[-+]?[0-9]*\\.?[0-9]+")){
+
+                    costPrice.setError("Enter 10 or 10.00");
+
+                    Toast toast = Toast.makeText(getApplicationContext(),"Please fill up the error field",Toast.LENGTH_SHORT);
+
+                    toast.show();
+
+                }else {
+
+                    //constructor
+                    Item item1 = new Item("0", itemName.getText().toString(), itemUnit.getText().toString(), itemDesc.getText().toString(), Double.parseDouble(sellPrice.getText().toString()), Double.parseDouble(costPrice.getText().toString()));
+                    UpdateItem updateItem = new UpdateItem(item1);
+                    updateItem.execute("");
+                    this.finish();
+                    Intent intent = new Intent(this, ItemMain.class);
+                    intent.putExtra("itemID", itemID);
+                    startActivity(intent);
+
+                    //Log.d("HAHA",itemName.getText().toString() + itemUnit.getText().toString() + itemDesc.getText().toString());
+                    return true;
+                }
             }
 
             default:

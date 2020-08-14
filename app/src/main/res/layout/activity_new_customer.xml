@@ -86,7 +86,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Business"
-
                     android:checked="true"
                     app:layout_constraintEnd_toEndOf="@+id/text_customer_name_input_sales"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -99,7 +98,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Individual"
-
                     app:layout_constraintEnd_toEndOf="@+id/text_customer_name_input_sales"
                     app:layout_constraintHorizontal_bias="0.75"
                     app:layout_constraintStart_toStartOf="@+id/text_customer_name_input_sales"
@@ -214,7 +212,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Male"
-
                 android:checked="true"
                 app:layout_constraintEnd_toEndOf="@+id/group_gender"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -227,7 +224,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="Female"
-
                 app:layout_constraintEnd_toEndOf="@+id/group_gender"
                 app:layout_constraintHorizontal_bias="0.75"
                 app:layout_constraintStart_toStartOf="@+id/group_gender"

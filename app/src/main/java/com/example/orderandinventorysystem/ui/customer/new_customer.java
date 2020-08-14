@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -49,6 +50,9 @@ public class new_customer extends AppCompatActivity {
 
         custType = findViewById(R.id.group_custType);
         custGender = findViewById(R.id.group_gender);
+
+        radioCustType = findViewById(R.id.radioBtn_Business);
+        radioGender = findViewById(R.id.radioBtn_Male);
 
         custType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -101,27 +105,91 @@ public class new_customer extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save: {
-                //constructor
-                Customer cust = new Customer("0", custName.getText().toString(), custIC.getText().toString(), custEmail.getText().toString(), companyPhone.getText().toString(), custMobile.getText().toString(), companyName.getText().toString(), radioGender.getText().toString(), radioCustType.getText().toString(), custAddress.getText().toString());
-                AddCust addCust = new AddCust(cust);
-                addCust.execute("");
 
-                String str_result="h";
-                try {
-                    str_result= new RetrieveCustID().execute().get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                Toast toast = Toast.makeText(getApplicationContext(), "Please fill up the error field", Toast.LENGTH_SHORT);
+
+                if(custName.getText().toString().isEmpty() || custIC.getText().toString().isEmpty() || custEmail.getText().toString().isEmpty() || companyPhone.getText().toString().isEmpty() || custMobile.getText().toString().isEmpty() || companyName.getText().toString().isEmpty() || custAddress.getText().toString().isEmpty()){
+
+                    if(custName.getText().toString().isEmpty())
+                        custName.setError("Please enter this field");
+
+                    if(custIC.getText().toString().isEmpty())
+                        custIC.setError("Please enter this field");
+
+                    if(custEmail.getText().toString().isEmpty())
+                        custEmail.setError("Please enter this field");
+
+                    if(companyPhone.getText().toString().isEmpty())
+                        companyPhone.setError("Please enter this field");
+
+                    if(custMobile.getText().toString().isEmpty())
+                        custMobile.setError("Please enter this field");
+
+                    if(companyName.getText().toString().isEmpty())
+                        companyName.setError("Please enter this field");
+
+                    if(custAddress.getText().toString().isEmpty())
+                        custAddress.setError("Please enter this field");
+
+                    toast.show();
+
+                }else if(!custName.getText().toString().matches("[a-zA-Z ]+")) {
+                    custName.setError("Only A-Z allow");
+                        toast.show();
+
+                } else if(!custIC.getText().toString().matches("^[0-9]*$")) {
+                    custIC.setError("Enter your IC without (-)");
+                        toast.show();
+
+                } else if(!custIC.getText().toString().matches("^(\\d{12})$") ) {
+                    custIC.setError("IC No. have 12 digit");
+                        toast.show();
+
+                } else if(!custEmail.getText().toString().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") ) {
+                    custEmail.setError("example@gmail.com");
+                        toast.show();
+
+                } else if(!companyPhone.getText().toString().matches("^[0-9]*$")) {
+                    companyPhone.setError("Enter your company Phone No. without (-)");
+                    toast.show();
+
+                } else if(!companyPhone.getText().toString().matches("^(\\d{9}|\\d{10}|\\d{11}|\\d{12})$") ) {
+                        companyPhone.setError("phone No. should be 9-12 digit");
+                        toast.show();
+                } else if(!custMobile.getText().toString().matches("^[0-9]*$")) {
+                        custMobile.setError("Enter your Mobile No. without (-)");
+                        toast.show();
+                } else if(!custMobile.getText().toString().matches("^(\\d{10}|\\d{11}|\\d{12})$") ) {
+                        custMobile.setError("phone No. should be 10-12 digit");
+                        toast.show();
+                } else if(!companyName.getText().toString().matches("[a-zA-Z ]+")) {
+                        companyName.setError("Only A-Z allow");
+                        toast.show();
+
+                }else {
+
+                    //constructor
+                    Customer cust = new Customer("0", custName.getText().toString(), custIC.getText().toString(), custEmail.getText().toString(), companyPhone.getText().toString(), custMobile.getText().toString(), companyName.getText().toString(), radioGender.getText().toString(), radioCustType.getText().toString(), custAddress.getText().toString());
+                    AddCust addCust = new AddCust(cust);
+                    addCust.execute("");
+
+                    String str_result = "h";
+                    try {
+                        str_result = new RetrieveCustID().execute().get();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    this.finish();
+
+                    RetrieveCustID retrieveCustID = new RetrieveCustID();
+                    retrieveCustID.execute("");
+                    Intent intent = new Intent(this, CustomerMain.class);
+                    intent.putExtra("CustomerID", latestID2);
+                    startActivity(intent);
+                    return true;
                 }
-                this.finish();
-
-                RetrieveCustID retrieveCustID = new RetrieveCustID();
-                retrieveCustID.execute("");
-                Intent intent = new Intent(this, CustomerMain.class);
-                intent.putExtra("CustomerID", latestID2);
-                startActivity(intent);
-                return true;
             }
 
             default:
