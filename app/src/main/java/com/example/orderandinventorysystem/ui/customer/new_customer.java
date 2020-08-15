@@ -1,5 +1,6 @@
 package com.example.orderandinventorysystem.ui.customer;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,6 +27,10 @@ import com.example.orderandinventorysystem.ui.item.add_item;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 public class new_customer extends AppCompatActivity {
@@ -60,7 +66,7 @@ public class new_customer extends AppCompatActivity {
         custType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId) {
+                switch (checkedId) {
                     case R.id.radioBtn_Business:
                         radioCustType = findViewById(R.id.radioBtn_Business);
                         break;
