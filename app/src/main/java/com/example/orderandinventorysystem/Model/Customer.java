@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class Customer implements Serializable {
 
-    private String custID, custName, icNo, email, phone, mobile, companyName, gender, custType, address;
+    private String custID, custName, icNo, email, phone, mobile, companyName, gender, custType, address, postCode, city, state;
 
-    public Customer(String custID, String custName, String icNo, String email, String phone, String mobile, String companyName, String gender, String custType, String address) {
+    public Customer(String custID, String custName, String icNo, String email, String phone, String mobile, String companyName, String gender, String custType, String address, String postCode, String city, String state) {
 
         this.custID = custID;
         this.custName = custName;
@@ -18,6 +18,33 @@ public class Customer implements Serializable {
         this.gender = gender;
         this.custType = custType;
         this.address = address;
+        this.postCode = postCode;
+        this.city = city;
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 
     public String getCustID(){

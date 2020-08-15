@@ -105,56 +105,27 @@
 
             </RadioGroup>
 
-
-            <TextView
-                android:id="@+id/text_salutation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Salutation"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/group_custType"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/group_custType"
-                app:layout_constraintTop_toBottomOf="@+id/group_custType" />
-
             <TextView
                 android:id="@+id/text_firstName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:layout_marginLeft="10dp"
                 android:text="Name"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/group_custType"
-                app:layout_constraintHorizontal_bias="0.30"
-                app:layout_constraintStart_toEndOf="@+id/text_salutation"
-                app:layout_constraintTop_toBottomOf="@+id/group_custType" />
-
-            <EditText
-                android:id="@+id/text_salutation_input"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Mr"
-                app:layout_constraintEnd_toEndOf="@+id/text_salutation"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/text_salutation"
-                app:layout_constraintTop_toBottomOf="@+id/text_salutation" />
+                app:layout_constraintStart_toStartOf="@+id/group_custType"
+                app:layout_constraintTop_toBottomOf="@+id/group_custType" />
 
             <EditText
                 android:id="@+id/text_custName_input"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 app:layout_constraintEnd_toEndOf="@+id/text_firstName"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/text_salutation_input"
+                app:layout_constraintStart_toStartOf="@+id/text_firstName"
                 app:layout_constraintTop_toBottomOf="@+id/text_firstName" />
 
             <TextView
@@ -165,10 +136,10 @@
                 android:text="IC"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/text_salutation_input"
+                app:layout_constraintEnd_toEndOf="@+id/text_custName_input"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/text_salutation_input"
-                app:layout_constraintTop_toBottomOf="@+id/text_salutation_input" />
+                app:layout_constraintStart_toStartOf="@+id/text_custName_input"
+                app:layout_constraintTop_toBottomOf="@+id/text_custName_input" />
 
             <EditText
                 android:id="@+id/text_custIc_input"
@@ -176,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ems="10"
-                android:hint="XXXXXX-XX-XXXX"
+                android:hint="Enter IC without (-)"
                 app:layout_constraintEnd_toEndOf="@+id/text_custIc"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/text_custIc"
@@ -275,6 +246,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ems="10"
+                android:hint="01XXXXXXXX"
                 app:layout_constraintEnd_toEndOf="@+id/text_custMobile"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/text_custMobile"
@@ -283,7 +255,7 @@
             <TextView
                 android:id="@+id/group_other_info"
                 android:layout_width="0dp"
-                android:layout_height="400dp"
+                android:layout_height="620dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
@@ -355,11 +327,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_address" />
 
             <TextView
-                android:id="@+id/text_phone"
+                android:id="@+id/text_postCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:text="Phone"
+                android:text="PostCode"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/text_address_input"
@@ -368,11 +340,84 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_address_input" />
 
             <EditText
+                android:id="@+id/text_postCode_input"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/text_postCode"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/text_postCode"
+                app:layout_constraintTop_toBottomOf="@+id/text_postCode" />
+
+            <TextView
+                android:id="@+id/text_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="City"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.25"
+                app:layout_constraintStart_toEndOf="@+id/text_postCode_input"
+                app:layout_constraintTop_toBottomOf="@+id/text_address_input" />
+
+            <EditText
+                android:id="@+id/text_city_input"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/text_city"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/text_city"
+                app:layout_constraintTop_toBottomOf="@+id/text_city" />
+
+            <TextView
+                android:id="@+id/text_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="State"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/text_postCode_input"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/text_postCode_input"
+                app:layout_constraintTop_toBottomOf="@+id/text_postCode_input" />
+
+            <EditText
+                android:id="@+id/text_state_input"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/text_state"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/text_state"
+                app:layout_constraintTop_toBottomOf="@+id/text_state" />
+
+            <TextView
+                android:id="@+id/text_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Phone"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/text_state_input"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/text_state_input"
+                app:layout_constraintTop_toBottomOf="@+id/text_state_input" />
+
+            <EditText
                 android:id="@+id/text_phone_input"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ems="10"
+                android:hint="without (-)"
                 app:layout_constraintEnd_toEndOf="@+id/text_phone"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/text_phone"

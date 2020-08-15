@@ -114,7 +114,7 @@ public class CustomerMain extends AppCompatActivity {
                     ResultSet rs = stmt.executeQuery(query);
 
                     if(rs.next()){
-                        cust = new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
+                        cust = new Customer(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13));
                     }
 
                     Log.d("Success", "Done");
@@ -151,7 +151,7 @@ public class CustomerMain extends AppCompatActivity {
             TextView mobile = (TextView)findViewById(R.id.mobile);
             mobile.setText(cust.getMobile());
             TextView address = (TextView)findViewById(R.id.address);
-            address.setText(cust.getAddress());
+            address.setText(cust.getAddress() + "\n" + cust.getPostCode() + " " + cust.getCity() + " " + cust.getState());
             TextView email = (TextView)findViewById(R.id.email);
             email.setText(cust.getEmail());
 
